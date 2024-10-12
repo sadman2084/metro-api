@@ -1,10 +1,13 @@
-from fastapi import FastAPI, HTTPException, Request, status
+from fastapi import Depends, FastAPI, HTTPException, Request, status
+from sqlalchemy import update
 from database import Base, engine, SessionLocal
 from fastapi.responses import RedirectResponse
+import models
 import schemas
+from sqlalchemy.orm import Session
 
-Base.metadata.create_all(engine) # creating database
-app = FastAPI() # app init
+Base.metadata.create_all(engine)  # creating database
+app = FastAPI()  # app init
 users = []
 
 # Helper function to get database session
@@ -19,25 +22,59 @@ def get_session():
 def root():
     return RedirectResponse(url="/docs")
 
-@app.get("/users/{id}", response_model=schemas.User)
-def get_user(id: int)-> schemas.User:
-    if (id >= len(users)):
-        raise HTTPException(status_code=404, detail="user not found")
-    return users[id]
+@app.get("/users/{id}")
+def get_user_balance(key: str, session: Session = Depends(get_session)):
+    user = session.query(models.User).filter(models.User.key == key).first()
+    if not user:
+        raise HTTPException(status_code=404, detail=f"user {key} not found")
+    return user.balance
+
+@app.get("/users")
+def get_all_users(session: Session = Depends(get_session)):
+    user_data = session.query(models.User).all()
+    return user_data
 
 @app.post("/users", status_code=status.HTTP_201_CREATED)
-def create_user(user: schemas.User):
-    users.append(user)
-    return users 
+def create_new_user(user: schemas.User, session: Session = Depends(get_session)):
+    user_db = models.User(key=user.key, balance=user.balance, logs=user.logs)
+    
+    # add it to the session and commit it
+    session.add(user_db)
+    session.commit()
+    session.refresh(user_db)
 
-@app.put("/user/{id}")
-def update_user(id: int):
-    return "update user item with id {id}"
+    return user_db
 
-@app.delete("/user/{id}")
-def delete_user(id: int):
-    return "delete user item with id {id}"
+@app.put("/users/+/{id}")
+def user_balance_recharge(key: str, val: int, session: Session = Depends(get_session)):
+    user = session.query(models.User).filter(models.User.key == key).first()
+    if not user:
+        raise HTTPException(status_code=404, detail=f"user {key} not found")
+    
+    # Update the balance
+    session.execute(
+        update(models.User).where(models.User.key == key).values(balance=user.balance + int(val))
+    )
+    session.commit()
+    return {"message": "Balance recharged successfully"}
 
-@app.get("/users", response_model=list[schemas.User])
-def get_users(limit: int = 10):
-    return users[0:limit]
+@app.put("/users/-/{id}")
+def user_balance_discharge(key: str, val: int, session: Session = Depends(get_session)):
+    user = session.query(models.User).filter(models.User.key == key).first()
+    if not user:
+        raise HTTPException(status_code=404, detail=f"user {key} not found")
+    
+    # Update the balance
+    session.execute(
+        update(models.User).where(models.User.key == key).values(balance=user.balance - int(val))
+    )
+    session.commit()
+    return {"message": "Balance discharged successfully"}
+
+@app.delete("/users/{id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_user(key: str, session: Session = Depends(get_session)):
+    user = session.query(models.User).filter(models.User.key == key).first()
+    if not user:
+        raise HTTPException(status_code=404, detail=f"user {key} not found")
+    session.delete(user)
+    session.commit()
