@@ -1,9 +1,19 @@
 from fastapi import FastAPI, HTTPException, Request, status
+from database import Base, engine, SessionLocal
 from fastapi.responses import RedirectResponse
 import schemas
 
-app = FastAPI()
+Base.metadata.create_all(engine) # creating database
+app = FastAPI() # app init
 users = []
+
+# Helper function to get database session
+def get_session():
+    session = SessionLocal()
+    try:
+        yield session
+    finally:
+        session.close()
 
 @app.get("/")
 def root():
