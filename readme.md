@@ -68,7 +68,7 @@ Once the setup is complete, the server will start automatically. Visit:
 - <http://127.0.0.1:8000/> (It will redirect to `/docs`)
 
 > Or, check the video guide,
-> https://youtu.be/UHvnPYXTJ3U
+> [![Screenshot_20241013_154234](https://github.com/user-attachments/assets/1143b791-77dd-44bc-8e48-e51e986542c0)](https://youtu.be/UHvnPYXTJ3U)
 
 ## 📂 Endpoints Overview
 
