@@ -104,7 +104,6 @@ run() {
 
 welcome
 check_os
-check_dir
 check_venv
 install_requirements
 run
