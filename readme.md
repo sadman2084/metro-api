@@ -82,7 +82,7 @@ Once the setup is complete, the server will start automatically. Visit:
 
 ## 📜 License
 
-This project is licensed under the MIT License.
+This project is licensed under the [MIT License](LICENSE).
 
 > Enjoy using Metro-API! ✨
 > This `README.md` file is concise and highlights the essential aspects of the project, providing a smooth start for users. Let me know if you'd like to tweak anything!
