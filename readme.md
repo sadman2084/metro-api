@@ -67,6 +67,9 @@ Once the setup is complete, the server will start automatically. Visit:
 
 - <http://127.0.0.1:8000/> (It will redirect to `/docs`)
 
+> Or, check the video guide,
+> https://youtu.be/UHvnPYXTJ3U
+
 ## 📂 Endpoints Overview
 
 - `GET /users/{id}` - Retrieve user balance
