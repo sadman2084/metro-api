@@ -75,12 +75,12 @@ Once the setup is complete, the server will start automatically. Visit:
 - `PUT /users/-/id` - Discharge balance
 - `DELETE /users/{id}` - Delete a user
 
-👥 Contributors
+## 👥 Contributors
 
 [![SharafatKarim's Profilator](https://profilator.deno.dev/SharafatKarim?v=1.0.0.alpha.4)](https://github.com/SharafatKarim)
 [![sadman2084's Profilator](https://profilator.deno.dev/sadman2084?v=1.0.0.alpha.4)](https://github.com/sadman2084)
 
-📜 License
+## 📜 License
 
 This project is licensed under the MIT License.
 
