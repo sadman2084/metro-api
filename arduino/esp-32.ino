@@ -1,5 +1,5 @@
 /*
- * CC-0 by Sharafat Karim
+ * CC-0 by Sharafat Karim and Sadman Kabir
  */
 
 #include <WiFi.h>
