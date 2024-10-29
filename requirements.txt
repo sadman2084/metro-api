@@ -2,3 +2,6 @@ fastapi[standard]
 uvicorn
 pydantic
 sqlalchemy 
+
+# OPTIONAL
+pyserial

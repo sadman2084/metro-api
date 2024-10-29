@@ -4,7 +4,7 @@ import time  # For timing purposes
 
 # Configure the serial port connection to Arduino
 arduino_port = '/dev/ttyUSB0'  # Change this to your Arduino port (e.g., 'COM3' on Windows, '/dev/ttyUSB0' on Linux)
-baud_rate = 96001  # Match the baud rate with Arduino's Serial.begin rate
+baud_rate = 9600  # Match the baud rate with Arduino's Serial.begin rate
 ser = serial.Serial(arduino_port, baud_rate)
 time.sleep(2)  # Wait for Arduino to initialize
 
@@ -14,7 +14,7 @@ root.attributes("-fullscreen", True)  # Make window full screen
 root.configure(bg="black")  # Set background color to black
 
 # Label to display Arduino data
-data_label = tk.Label(root, text="", font=("Helvetica", 80), fg="white", bg="black")
+data_label = tk.Label(root, text="", font=("Helvetica", 50), fg="white", bg="black")
 data_label.pack(expand=True)
 
 def read_from_arduino():
