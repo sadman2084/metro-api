@@ -11,10 +11,10 @@ time.sleep(2)  # Wait for Arduino to initialize
 # Tkinter setup for full-screen display
 root = tk.Tk()
 root.attributes("-fullscreen", True)  # Make window full screen
-root.configure(bg="black")  # Set background color to black
+root.configure(bg="white")  # Set background color to black
 
 # Label to display Arduino data
-data_label = tk.Label(root, text="", font=("Helvetica", 50), fg="white", bg="black")
+data_label = tk.Label(root, text="", font=("Helvetica", 50), fg="black", bg="white")
 data_label.pack(expand=True)
 
 def read_from_arduino():
